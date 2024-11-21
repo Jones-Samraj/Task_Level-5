@@ -19,7 +19,18 @@ let options=["","","","","","","","",""];
 let Playerimage=x;
 let player="X";
 let running=false;
-init();
+
+function choosePlayer() {
+    const choice = prompt("Choose X or O").toUpperCase();
+    if (choice === 'X' || choice === 'O') {
+        player = choice;
+        Playerimage = choice === 'X' ? x : o;
+        init();
+    } else {
+        alert("Please choose either X or O");
+        choosePlayer();
+    }
+}
 
 function init(){
   boxs.forEach(box=>box.addEventListener('click',boxClick));
@@ -77,12 +88,11 @@ function checkWinner(){
 
 function restartGame(){
   options=["","","","","","","","",""];
-  Playerimage=x;
-  player="X";
-  running=true;
-  statusTxt.textContent=`${player} Your Turn`;
+  choosePlayer();
   boxs.forEach(box=>{
       box.innerHTML="";
       box.classList.remove('win');
   });
 }
+
+choosePlayer();
